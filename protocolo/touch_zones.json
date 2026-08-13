@@ -1,0 +1,50 @@
+{
+  "coordinate_space": {
+    "x_min": 0,
+    "x_max": 501,
+    "y_min": 7,
+    "y_max": 253
+  },
+  "zones": [
+    {
+      "name": "centro",
+      "x_min": 167,
+      "x_max": 334,
+      "y_min": 89,
+      "y_max": 171,
+      "action": "touch_center"
+    },
+    {
+      "name": "cima",
+      "x_min": 0,
+      "x_max": 501,
+      "y_min": 7,
+      "y_max": 88,
+      "action": "touch_top"
+    },
+    {
+      "name": "baixo",
+      "x_min": 0,
+      "x_max": 501,
+      "y_min": 172,
+      "y_max": 253,
+      "action": "touch_bottom"
+    },
+    {
+      "name": "esquerda",
+      "x_min": 0,
+      "x_max": 166,
+      "y_min": 89,
+      "y_max": 171,
+      "action": "touch_left"
+    },
+    {
+      "name": "direita",
+      "x_min": 335,
+      "x_max": 501,
+      "y_min": 89,
+      "y_max": 171,
+      "action": "touch_right"
+    }
+  ]
+}

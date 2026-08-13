@@ -1,0 +1,12 @@
+{
+  "send_media": true,
+  "default_action": "toggle",
+  "zones": {
+    "centro": "toggle",
+    "cima": "play",
+    "baixo": "pause",
+    "esquerda": "visual",
+    "direita": "visual",
+    "fora_zona": "visual"
+  }
+}

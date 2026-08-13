@@ -1,0 +1,28 @@
+{
+  "zones": {
+    "centro": "toggle_media",
+    "cima": "play_media",
+    "baixo": "pause_media",
+    "esquerda": "log_touch",
+    "direita": "log_touch",
+    "fora_zona": "log_touch"
+  },
+  "functions": {
+    "toggle_media": {
+      "type": "media",
+      "command": "toggle"
+    },
+    "play_media": {
+      "type": "media",
+      "command": "play"
+    },
+    "pause_media": {
+      "type": "media",
+      "command": "pause"
+    },
+    "log_touch": {
+      "type": "log",
+      "message": "touch recebido"
+    }
+  }
+}
