@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import select
 import statistics
 import time
@@ -13,10 +14,11 @@ from pathlib import Path
 
 import serial
 
-
-DEFAULT_DEVICE = "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0"
-DEFAULT_OUTPUT = "/home/paulo/botao-lab/logs/touch_calibration.csv"
-DEFAULT_ZONES = "/home/paulo/botao-lab/protocolo/touch_zones_calibrated.json"
+ROOT = Path(__file__).resolve().parent
+# Descubra o seu com: ls /dev/serial/by-id/
+DEFAULT_DEVICE = os.environ.get("BOTAO_DEVICE", "/dev/ttyUSB0")
+DEFAULT_OUTPUT = str(ROOT / "logs" / "touch_calibration.csv")
+DEFAULT_ZONES = str(ROOT / "protocolo" / "touch_zones_calibrated.json")
 PACKET_HEADER = bytes.fromhex("a5 3c 00 08 00")
 PACKET_SIZE = 13
 TOUCH_CODES = {0x05, 0x07, 0x09, 0x0A}

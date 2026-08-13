@@ -31,9 +31,9 @@ Codigos observados com coordenadas:
 ## Mapa ao vivo
 
 ```bash
-/home/paulo/botao --touch-map --duration 30 \
-  --csv /home/paulo/botao-lab/logs/touch.csv \
-  --log /home/paulo/botao-lab/logs/touch.bin
+botao --touch-map --duration 30 \
+  --csv ./logs/touch.csv \
+  --log ./logs/touch.bin
 ```
 
 Esse modo mostra so eventos de touch e salva:
@@ -60,14 +60,14 @@ Depois disso, as regioes de `touch_zones.json` podem virar funcoes reais.
 Calibracao guiada, com rótulos e salvamento automático:
 
 ```bash
-/home/paulo/botao-lab/touch_calibrate.py
+./touch_calibrate.py
 ```
 
 Ela salva:
 
 ```text
-/home/paulo/botao-lab/logs/touch_calibration.csv
-/home/paulo/botao-lab/protocolo/touch_zones_calibrated.json
+./logs/touch_calibration.csv
+./protocolo/touch_zones_calibrated.json
 ```
 
 ## Acoes por zona
@@ -75,13 +75,13 @@ Ela salva:
 Rodar classificador ao vivo:
 
 ```bash
-/home/paulo/botao-lab/touch_actions.py
+./touch_actions.py
 ```
 
 Rodar por tempo limitado:
 
 ```bash
-/home/paulo/botao-lab/touch_actions.py --duration 30
+./touch_actions.py --duration 30
 ```
 
 Saida esperada:
@@ -93,7 +93,7 @@ touch x=222 y=144 code=05 flag=00 zone=centro action=touch_center
 Zonas configuradas em:
 
 ```text
-/home/paulo/botao-lab/protocolo/touch_zones.json
+./protocolo/touch_zones.json
 ```
 
 ## Antena 1 Play/Pause
@@ -111,13 +111,13 @@ kill <PID>
 Rodar:
 
 ```bash
-/home/paulo/botao-lab/antena1_touch.py
+./antena1_touch.py
 ```
 
 Modo visual apenas, sem enviar comando para players do sistema:
 
 ```bash
-/home/paulo/botao-lab/antena1_touch.py --no-media
+./antena1_touch.py --no-media
 ```
 
 O app tenta enviar Play/Pause via MPRIS/DBus para players compatíveis. Se não

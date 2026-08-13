@@ -17,13 +17,17 @@ import tkinter as tk
 from pathlib import Path
 from tkinter import messagebox, ttk
 
+import os
+
 import serial
 from PIL import Image, ImageTk
 
+ROOT = Path(__file__).resolve().parent
 
-DEFAULT_DEVICE = "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0"
-DEFAULT_LOGO = "/home/paulo/Imagens/Capturas de tela/Captura de tela de 2026-06-18 11-46-35.png"
-DEFAULT_CONFIG = "/home/paulo/botao-lab/config/play_pause.json"
+# Descubra o seu com: ls /dev/serial/by-id/
+DEFAULT_DEVICE = os.environ.get("BOTAO_DEVICE", "/dev/ttyUSB0")
+DEFAULT_LOGO = str(ROOT / "assets" / "antena1_logo.png")
+DEFAULT_CONFIG = str(ROOT / "config" / "play_pause.json")
 PACKET_HEADER = bytes.fromhex("a5 3c 00 08 00")
 PACKET_SIZE = 13
 TOUCH_CODES = {0x05, 0x07, 0x09, 0x0A}
@@ -323,6 +327,11 @@ class AntenaTouchApp:
         self.save_ui_settings()
 
     def load_logo(self, path: Path, max_width: int, max_height: int) -> ImageTk.PhotoImage:
+        if not path.exists():
+            raise FileNotFoundError(
+                f"Logo nao encontrado em {path}. Coloque uma imagem ali ou "
+                "informe outra com --logo <caminho>."
+            )
         image = Image.open(path).convert("RGBA")
         image.thumbnail((max_width, max_height), Image.Resampling.LANCZOS)
         return ImageTk.PhotoImage(image)

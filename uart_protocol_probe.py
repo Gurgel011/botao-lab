@@ -9,14 +9,16 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import os
 import time
 from pathlib import Path
 
 import serial
 
-
-DEFAULT_DEVICE = "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0"
-DEFAULT_LOG = "/home/paulo/botao-lab/logs/uart_protocol_probe.log"
+ROOT = Path(__file__).resolve().parent
+# Descubra o seu com: ls /dev/serial/by-id/
+DEFAULT_DEVICE = os.environ.get("BOTAO_DEVICE", "/dev/ttyUSB0")
+DEFAULT_LOG = str(ROOT / "logs" / "uart_protocol_probe.log")
 DEFAULT_BAUDS = [115200, 9600, 57600, 38400, 19200, 230400, 460800, 921600]
 SAFE_COMMANDS = [
     "AT",

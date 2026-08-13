@@ -4,13 +4,15 @@
 from __future__ import annotations
 
 import argparse
+import os
 import subprocess
 import sys
 from pathlib import Path
 
 
-ROOT = Path("/home/paulo/botao-lab")
-DEFAULT_DEVICE = "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0"
+ROOT = Path(__file__).resolve().parent
+# Descubra o seu com: ls /dev/serial/by-id/
+DEFAULT_DEVICE = os.environ.get("BOTAO_DEVICE", "/dev/ttyUSB0")
 DEFAULT_LINK = "/tmp/botao_uart"
 DEFAULT_LOG = ROOT / "logs" / "uart_mitm.log"
 DEFAULT_RAW = ROOT / "logs" / "uart_mitm.raw"

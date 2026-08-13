@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import os
 import select
 import subprocess
 import threading
@@ -19,10 +20,11 @@ import serial
 from protocolo.frame import find_zone as _find_zone_obj
 from protocolo.frame import iter_packets, parse_touch
 
-
-DEFAULT_DEVICE = "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0"
-DEFAULT_ZONES = "/home/paulo/botao-lab/protocolo/touch_zones.json"
-DEFAULT_CONFIG = "/home/paulo/botao-lab/config/touch_autonomy.json"
+ROOT = Path(__file__).resolve().parent
+# Descubra o seu com: ls /dev/serial/by-id/
+DEFAULT_DEVICE = os.environ.get("BOTAO_DEVICE", "/dev/ttyUSB0")
+DEFAULT_ZONES = str(ROOT / "protocolo" / "touch_zones.json")
+DEFAULT_CONFIG = str(ROOT / "config" / "touch_autonomy.json")
 
 ACTIONS = {
     "toggle": "Alternar Play/Pause",

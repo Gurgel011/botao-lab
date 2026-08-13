@@ -20,13 +20,13 @@ Preencher uma linha para cada gesto ou comando testado.
 Arquivo bruto:
 
 ```text
-/home/paulo/botao-lab/logs/mapeamento-01.bi
+./logs/mapeamento-01.bi
 ```
 
 Analise decodificada:
 
 ```text
-/home/paulo/botao-lab/protocolo/mapeamento-01.txt
+./protocolo/mapeamento-01.txt
 ```
 
 Descobertas:
@@ -50,10 +50,10 @@ Descobertas:
   - Exemplo: pacote repouso `00 00 00 00 00 00 01` soma `0x01`,
     checksum `0xBA`.
 - Analise automatica:
-  - `/home/paulo/botao-lab/analyze_uart.py`.
+  - `./analyze_uart.py`.
   - `touch.bin`: 22 frames validos, checksum ruim `0`.
   - `mapeamento-01.bi`: 30 frames validos, checksum ruim `0`.
-  - relatorios JSON em `/home/paulo/botao-lab/logs/*.analysis.json`.
+  - relatorios JSON em `./logs/*.analysis.json`.
 
 Exemplos reais:
 

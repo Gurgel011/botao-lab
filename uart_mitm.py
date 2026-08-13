@@ -20,10 +20,12 @@ from pathlib import Path
 import serial
 
 
-DEFAULT_DEVICE = "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0"
+ROOT = Path(__file__).resolve().parent
+# Descubra o seu com: ls /dev/serial/by-id/
+DEFAULT_DEVICE = os.environ.get("BOTAO_DEVICE", "/dev/ttyUSB0")
 DEFAULT_LINK = "/tmp/botao_uart"
-DEFAULT_LOG = "/home/paulo/botao-lab/logs/uart_mitm.log"
-DEFAULT_RAW = "/home/paulo/botao-lab/logs/uart_mitm.raw"
+DEFAULT_LOG = str(ROOT / "logs" / "uart_mitm.log")
+DEFAULT_RAW = str(ROOT / "logs" / "uart_mitm.raw")
 
 
 def parse_args() -> argparse.Namespace:

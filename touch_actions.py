@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import select
 import time
 from pathlib import Path
@@ -13,9 +14,10 @@ import serial
 
 from protocolo.frame import find_zone, iter_packets, parse_touch
 
-
-DEFAULT_DEVICE = "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0"
-DEFAULT_ZONES = "/home/paulo/botao-lab/protocolo/touch_zones.json"
+ROOT = Path(__file__).resolve().parent
+# Descubra o seu com: ls /dev/serial/by-id/
+DEFAULT_DEVICE = os.environ.get("BOTAO_DEVICE", "/dev/ttyUSB0")
+DEFAULT_ZONES = str(ROOT / "protocolo" / "touch_zones.json")
 
 
 def parse_args() -> argparse.Namespace:

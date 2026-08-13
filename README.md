@@ -19,46 +19,57 @@ CH340, nao ESP32 comum. A primeira fase e apenas ouvir e mapear.
 
 ## Comecar
 
-A porta esta em:
+Descubra a porta do aparelho:
 
 ```bash
-/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+ls /dev/serial/by-id/
 ```
 
-Se estiver ocupada, veja quem esta usando:
+Todos os scripts deste repositório aceitam `--device <porta>` e também leem a
+variável de ambiente `BOTAO_DEVICE` (padrão: `/dev/ttyUSB0`):
+
+```bash
+export BOTAO_DEVICE=/dev/serial/by-id/<o-seu-aqui>
+```
+
+Se a porta estiver ocupada, veja quem está usando e pare o processo:
 
 ```bash
 fuser -v /dev/ttyUSB0
 ```
 
-Para liberar a porta, pare o processo que aparece no `fuser`. No ultimo teste,
-era o PID `941375`.
-
 ## Mapear eventos
+
+> Os comandos `--monitor`, `--scan-bauds` e `--line` abaixo pertencem a um
+> binário externo (`botao`), que não faz parte deste repositório e não estava
+> mais presente na máquina no momento desta revisão. Os scripts Python
+> equivalentes e mantidos aqui são `uart_protocol_probe.py` (probe seguro),
+> `capture_protocol.py` (captura guiada) e `touch_calibrate.py` (calibração) —
+> use-os se o binário `botao` não estiver disponível.
 
 Ouvir em texto:
 
 ```bash
-/home/paulo/botao --monitor --duration 20
+botao --monitor --duration 20
 ```
 
 Ouvir em hexadecimal, melhor para protocolo binario:
 
 ```bash
-/home/paulo/botao --monitor --hex --duration 20
+botao --monitor --hex --duration 20
 ```
 
 Salvar log bruto:
 
 ```bash
-/home/paulo/botao --monitor --hex --duration 30 \
-  --log /home/paulo/botao-lab/logs/mapeamento-01.bin
+botao --monitor --hex --duration 30 \
+  --log ./logs/mapeamento-01.bin
 ```
 
 Testar baud rates comuns:
 
 ```bash
-/home/paulo/botao --scan-bauds --duration 3
+botao --scan-bauds --duration 3
 ```
 
 ## Sequencia de descoberta
@@ -74,9 +85,9 @@ Testar baud rates comuns:
 ## Enviar comandos
 
 ```bash
-/home/paulo/botao --line "AT" --hex
-/home/paulo/botao --line "help" --hex
-/home/paulo/botao --line "status" --hex
+botao --line "AT" --hex
+botao --line "help" --hex
+botao --line "status" --hex
 ```
 
 ## Descobrir protocolo UART
@@ -84,13 +95,13 @@ Testar baud rates comuns:
 Probe seguro com comandos somente de identificacao/leitura:
 
 ```bash
-/home/paulo/botao-lab/uart_protocol_probe.py
+./uart_protocol_probe.py
 ```
 
 Log:
 
 ```text
-/home/paulo/botao-lab/logs/uart_protocol_probe.log
+./logs/uart_protocol_probe.log
 ```
 
 Esse probe nao envia `erase`, `flash`, `write`, `reset`, `reboot` ou `update`.
@@ -98,8 +109,8 @@ Esse probe nao envia `erase`, `flash`, `write`, `reset`, `reboot` ou `update`.
 Ponte para capturar um app/host oficial conversando com o aparelho:
 
 ```bash
-/home/paulo/botao-lab/uart_mitm.py \
-  --device /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0 \
+./uart_mitm.py \
+  --device "$BOTAO_DEVICE" \
   --baud 115200 \
   --link /tmp/botao_uart
 ```
@@ -113,8 +124,8 @@ Depois aponte o app oficial para:
 Logs:
 
 ```text
-/home/paulo/botao-lab/logs/uart_mitm.log
-/home/paulo/botao-lab/logs/uart_mitm.raw
+./logs/uart_mitm.log
+./logs/uart_mitm.raw
 ```
 
 Observacao: os logs so recebem dados quando algum app/host abre
@@ -124,32 +135,32 @@ apenas cria a porta virtual e fica aguardando trafego.
 Analisar capturas UART:
 
 ```bash
-/home/paulo/botao-lab/analyze_uart.py /home/paulo/botao-lab/logs/touch.bin
-/home/paulo/botao-lab/analyze_uart.py /home/paulo/botao-lab/logs/uart_mitm.raw
+./analyze_uart.py ./logs/touch.bin
+./analyze_uart.py ./logs/uart_mitm.raw
 ```
 
 Gerar relatorio JSON:
 
 ```bash
-/home/paulo/botao-lab/analyze_uart.py /home/paulo/botao-lab/logs/touch.bin --json
+./analyze_uart.py ./logs/touch.bin --json
 ```
 
 Captura guiada completa, com ponte + analise automatica:
 
 ```bash
-/home/paulo/botao-lab/capture_protocol.py --seconds 60 --json
+./capture_protocol.py --seconds 60 --json
 ```
 
 Durante esses 60 segundos, o app/demo oficial deve abrir `/tmp/botao_uart`.
 Quando houver trafego, a ferramenta analisa automaticamente
-`/home/paulo/botao-lab/logs/uart_mitm.raw`.
+`./logs/uart_mitm.raw`.
 
 ## Play/Pause com touch
 
 Aplicacao visual com logo da Antena 1 e escolha de acao do usuario:
 
 ```bash
-/home/paulo/botao-lab/antena1_touch.py
+./antena1_touch.py
 ```
 
 Opcoes disponiveis na janela:
@@ -162,7 +173,7 @@ Opcoes disponiveis na janela:
 A escolha fica salva em:
 
 ```text
-/home/paulo/botao-lab/config/play_pause.json
+./config/play_pause.json
 ```
 
 ## Autonomia por regioes do touch
@@ -170,13 +181,13 @@ A escolha fica salva em:
 Painel para o usuario escolher a acao de cada regiao do touch:
 
 ```bash
-/home/paulo/botao-lab/touch_autonomy.py
+./touch_autonomy.py
 ```
 
 Configuracao salva em:
 
 ```text
-/home/paulo/botao-lab/config/touch_autonomy.json
+./config/touch_autonomy.json
 ```
 
 Regioes atuais:
@@ -193,13 +204,13 @@ Regioes atuais:
 Daemon sem interface grafica para ligar regioes do touch a funcoes nomeadas:
 
 ```bash
-/home/paulo/botao-lab/botao_functions.py
+./botao_functions.py
 ```
 
 Configuracao:
 
 ```text
-/home/paulo/botao-lab/config/user_functions.json
+./config/user_functions.json
 ```
 
 Tipos de funcao suportados:

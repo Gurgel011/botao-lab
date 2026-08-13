@@ -71,13 +71,13 @@ Capturar um host oficial falando com o modulo.
 Ferramenta criada:
 
 ```bash
-/home/paulo/botao-lab/uart_mitm.py
+./uart_mitm.py
 ```
 
 Uso:
 
 ```bash
-/home/paulo/botao-lab/uart_mitm.py \
+./uart_mitm.py \
   --device /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0 \
   --baud 115200 \
   --link /tmp/botao_uart
@@ -99,8 +99,8 @@ e criou `/tmp/botao_uart`. Sem app/host conectado, nao ha bytes para registrar.
 Logs:
 
 ```text
-/home/paulo/botao-lab/logs/uart_mitm.log
-/home/paulo/botao-lab/logs/uart_mitm.raw
+./logs/uart_mitm.log
+./logs/uart_mitm.raw
 ```
 
 ## Analisador criado
@@ -108,7 +108,7 @@ Logs:
 Ferramenta:
 
 ```bash
-/home/paulo/botao-lab/analyze_uart.py
+./analyze_uart.py
 ```
 
 Ela analisa:
@@ -132,8 +132,8 @@ Resultados dos logs existentes:
 Relatorios JSON gerados:
 
 ```text
-/home/paulo/botao-lab/logs/touch.analysis.json
-/home/paulo/botao-lab/logs/mapeamento-01.analysis.json
+./logs/touch.analysis.json
+./logs/mapeamento-01.analysis.json
 ```
 
 ## Captura guiada
@@ -141,7 +141,7 @@ Relatorios JSON gerados:
 Ferramenta:
 
 ```bash
-/home/paulo/botao-lab/capture_protocol.py --seconds 60 --json
+./capture_protocol.py --seconds 60 --json
 ```
 
 Fluxo:
@@ -150,7 +150,7 @@ Fluxo:
 2. Aguarda o app/demo oficial conversar pela porta virtual.
 3. Salva `uart_mitm.log` e `uart_mitm.raw`.
 4. Analisa automaticamente o `.raw`.
-5. Salva `/home/paulo/botao-lab/logs/uart_mitm.analysis.json` quando usado
+5. Salva `./logs/uart_mitm.analysis.json` quando usado
    com `--json`.
 
 Teste local:
